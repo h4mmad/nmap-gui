@@ -4,14 +4,17 @@ import './App.css';
 import Form from './components/Form';
 import Card from './components/Card';
 import Console from './components/Console';
+import Spinner from './components/Spinner';
 
 function App() {
 
   const [host, setHost] = useState('');
+  const [spinner, setSpinner] = useState(false);
   const [apiResult, setApiResult] = useState([]);
   const [consoleText, setConsoleText] = useState('');
 
   async function getAPIData(host) {
+    setSpinner(true);
     const response = await fetch(`http://localhost:6969/${host}`);
     const data = await response.text();
 
@@ -27,13 +30,15 @@ function App() {
     })
     setApiResult(objArr);
     setConsoleText(data);
-    console.log(data);
+    setSpinner(false);
   }
 
 
 
   return (
     <div className='container-sm'>
+
+
       <Form
         host={host}
         setHost={setHost}
@@ -42,12 +47,20 @@ function App() {
         getAPIData={getAPIData}
       />
 
-      <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-        {apiResult.map(e => (<Card key={uuidv4()} individualCard={e}/>))}
+
+      {spinner ? <Spinner/> : ''}
+
+      {spinner ? '' :
+      <div>
+        <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+          {apiResult.map(e => (<Card key={uuidv4()} individualCard={e}/>))}
+        </div>
+
+        {consoleText === '' ? '' : <Console consoleText={consoleText}/>}
       </div>
+      }
 
-
-      <Console consoleText={consoleText} />
+      
 
     </div>
   );
