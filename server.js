@@ -9,7 +9,7 @@ app.use(cors());
 app.get('/:host', function (req, res) {
 
     console.log('Someone connected');
-    exec(`nmap -oX scan.xml -Pn ${req.params.host}`, (error, stdout, stderr) => {
+    exec(`nmap -oX scan.xml -Pn -F ${req.params.host}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             res.send(error);

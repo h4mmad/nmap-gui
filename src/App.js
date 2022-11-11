@@ -5,6 +5,7 @@ import Form from "./components/Form";
 import Card from "./components/Card";
 import Console from "./components/Console";
 import Spinner from "./components/Spinner";
+import Header from "./components/Header";
 
 function App() {
   const [host, setHost] = useState("");
@@ -12,13 +13,17 @@ function App() {
   const [apiResult, setApiResult] = useState([]);
   const [consoleText, setConsoleText] = useState("");
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [disabled, setDisabled] = useState(true);
 
   async function getAPIData(host) {
+
+    let data = '';
     try {
       setSpinner(true);
       setError(false);
       const response = await fetch(`http://localhost:6969/${host}`);
-      const data = await response.text();
+      data = await response.text();
       const arr = data.match(/[0-9]?[0-9]?[0-9]?[0-9]?\/(tcp|udp).*/gm);
       const objArr = arr.map((e) => {
         const splitArr = e.split(/[ ]{1,}/);
@@ -31,10 +36,13 @@ function App() {
       });
       setApiResult(objArr);
       setConsoleText(data);
+      console.log(data);
     } catch (error) {
       console.log(error);
       setError(true);
       setSpinner(false);
+      setErrorMessage(data);
+      console.log(data);
     } finally {
       setSpinner(false);
     }
@@ -42,9 +50,10 @@ function App() {
 
   return (
     <div className="container-sm">
+      <Header/>
       {error ? (
-        <div className="alert alert-warning" role="alert">
-          An error occured
+        <div className="alert alert-danger" role="alert">
+          An error occured: {errorMessage}
         </div>
       ) : (
         ""
@@ -57,6 +66,8 @@ function App() {
         setApiResult={setApiResult}
         getAPIData={getAPIData}
         spinner={spinner}
+        disabled={disabled}
+        setDisabled={setDisabled}
       />
 
       {spinner ? <Spinner /> : ""}
