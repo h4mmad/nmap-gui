@@ -22,7 +22,7 @@ app.get('/:host', function (req, res) {
         }
 
         const xml = require('fs').readFileSync('./scan.xml', 'utf8');
-        const result = convert.xml2json(xml, { compact: true, spaces: 4 });
+        const result = convert.xml2json(xml, { compact: true, spaces: 2 });
         
         console.log(result);
         res.send(stdout);

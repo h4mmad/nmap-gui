@@ -1,4 +1,4 @@
-const Form = ({ host, setHost, getAPIData }) => {
+const Form = ({ host, setHost, getAPIData, spinner }) => {
 
 
     const inputHandler = e => {
@@ -16,8 +16,8 @@ const Form = ({ host, setHost, getAPIData }) => {
         <form>
             <div className="mb-3 mt-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Enter Host URL</label>
-                <input onChange={inputHandler} type="email" className="form-control" id="exampleInputEmail1" value={host}/>
-                <button onClick={submitHandler} className="btn  btn-outline-primary mt-2">Start scan</button>
+                <input onChange={inputHandler} type="email" className="form-control" value={host}/>
+                <button onClick={submitHandler} className={`btn  btn-primary mt-2 ${spinner ? "disabled" : ''}`}>Start scan</button>
             </div>
         </form>
     );

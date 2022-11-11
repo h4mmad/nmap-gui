@@ -43,7 +43,7 @@ function App() {
   return (
     <div className="container-sm">
       {error ? (
-        <div class="alert alert-warning" role="alert">
+        <div className="alert alert-warning" role="alert">
           An error occured
         </div>
       ) : (
@@ -56,6 +56,7 @@ function App() {
         apiResult={apiResult}
         setApiResult={setApiResult}
         getAPIData={getAPIData}
+        spinner={spinner}
       />
 
       {spinner ? <Spinner /> : ""}
