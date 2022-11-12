@@ -1,7 +1,7 @@
-const { exec } = require("child_process");
-const express = require('express')
-const cors = require('cors');
-const convert = require('xml-js');
+import { exec } from "child_process";
+import express from 'express';
+import cors from 'cors';
+import convert from 'xml-js';
 const app = express()
 
 app.use(cors());
@@ -21,8 +21,8 @@ app.get('/:host', function (req, res) {
             return;
         }
 
-        const xml = require('fs').readFileSync('./scan.xml', 'utf8');
-        const result = convert.xml2json(xml, { compact: true, spaces: 2 });
+        // const xml = require('fs').readFileSync('./scan.xml', 'utf8');
+        // const result = convert.xml2json(xml, { compact: true, spaces: 2 });
         
         console.log(result);
         res.send(stdout);
