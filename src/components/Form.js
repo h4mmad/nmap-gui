@@ -1,4 +1,8 @@
-const Form = ({ host, setHost, getAPIData, spinner, disabled, setDisabled }) => {
+import { useState } from "react";
+
+const Form = ({ host, setHost, getAPIData, spinner}) => {
+
+    const [disabled, setDisabled] = useState(true);
 
 
     const inputHandler = e => {

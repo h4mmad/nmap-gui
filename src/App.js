@@ -14,7 +14,6 @@ function App() {
   const [consoleText, setConsoleText] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-  const [disabled, setDisabled] = useState(true);
 
   async function getAPIData(host) {
 
@@ -66,8 +65,6 @@ function App() {
         setApiResult={setApiResult}
         getAPIData={getAPIData}
         spinner={spinner}
-        disabled={disabled}
-        setDisabled={setDisabled}
       />
 
       {spinner ? <Spinner /> : ""}
