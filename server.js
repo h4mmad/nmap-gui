@@ -6,10 +6,10 @@ const app = express()
 
 app.use(cors());
 
-app.get('/:host', function (req, res) {
+app.get('/:host/:scanType', function (req, res) {
 
     console.log('Someone connected');
-    exec(`nmap -oX scan.xml -Pn -F ${req.params.host}`, (error, stdout, stderr) => {
+    exec(`nmap -oX scan.xml ${req.params.scanType} ${req.params.host}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             res.send(error);
