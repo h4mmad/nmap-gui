@@ -25,7 +25,7 @@ app.get('/:host', function (req, res) {
         const result = convert.xml2json(xml, { compact: true, spaces: 2 });
         
         console.log(result);
-        res.send(stdout);
+        res.send(result);
         console.log(stdout);
     });
 })

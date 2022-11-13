@@ -24,7 +24,7 @@ const Form = ({ host, setHost, getAPIData, spinner}) => {
     }
 
 
-    // 127.0.0.1:6969/elearning.usm.my
+    
     async function submitHandler(e) {
         e.preventDefault();
         getAPIData(host);
