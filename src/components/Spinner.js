@@ -1,10 +1,10 @@
 const Spinner = () => {
   return (
     <div className="overlay">
-      <div class="d-flex align-items-center">
+      <div className="d-flex align-items-center">
         <strong>Scanning please wait...</strong>
         <div
-          class="spinner-border ms-auto"
+          className="spinner-border ms-auto"
           role="status"
           aria-hidden="true"
         ></div>

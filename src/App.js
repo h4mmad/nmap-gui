@@ -9,10 +9,10 @@ import Header from "./components/Header";
 
 function App() {
   const [spinner, setSpinner] = useState(false);
-  const [apiResult, setApiResult] = useState([]);
   const [consoleText, setConsoleText] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [cardData, setCardData] = useState([]);
 
   return (
     <div className="container-sm">
@@ -26,12 +26,12 @@ function App() {
       )}
 
       <Form
-        setApiResult={setApiResult}
         spinner={spinner}
         setSpinner={setSpinner}
         setError={setError}
         setErrorMessage={setErrorMessage}
         setConsoleText={setConsoleText}
+        setCardData={setCardData}
       />
 
       {spinner ? <Spinner /> : ""}
@@ -41,7 +41,7 @@ function App() {
       ) : (
         <div>
           <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
-            {apiResult.map((e) => (
+            {cardData.map((e) => (
               <Card key={uuidv4()} individualCard={e} />
             ))}
           </div>

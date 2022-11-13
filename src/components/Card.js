@@ -11,12 +11,12 @@ const Card = ({ individualCard }) => {
             <div className="card">
                 <div className="card-body">
                     <img style={{ "width": "2rem", "float": "right"}}
-                        src={individualCard.status === "open" ? unlocked : locked}
+                        src={individualCard.state._attributes.state === "open" ? unlocked : locked}
                         alt="lock">
                     </img>
-                    <h5 className="card-title">{individualCard.port}</h5>
-                    <p className="card-text">status: {individualCard.status}</p>
-                    <p className="card-text">service: {individualCard.service}</p>
+                    <h5 className="card-title">{individualCard._attributes.portid} /{individualCard.service._attributes.name}</h5>
+                    <p className="card-text">status: {individualCard.state._attributes.state}</p>
+                    <p className="card-text">service: {individualCard.service._attributes.name}</p>
                 </div>
             </div>
         </div>

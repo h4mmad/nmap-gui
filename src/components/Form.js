@@ -1,7 +1,8 @@
 import { useState } from "react";
 
-const Form = ({ spinner, setSpinner, setError, setErrorMessage, setApiResult, setConsoleText }) => {
+const Form = ({ spinner, setSpinner, setError, setErrorMessage, setCardData }) => {
 
+    const [apiData, setApiData] = useState({});
     const [disabled, setDisabled] = useState(true);
     const [host, setHost] = useState('');
     const [scanType, setScanType] = useState('-Pn');
@@ -9,26 +10,20 @@ const Form = ({ spinner, setSpinner, setError, setErrorMessage, setApiResult, se
 
 
     async function getAPIData() {
-
-        let data = '';
+        let data = ''
         try {
             setSpinner(true);
             setError(false);
-            const response = await fetch(`http://localhost:6969/${host}/${scanType}`);
-            data = await response.text();
-            const arr = data.match(/[0-9]?[0-9]?[0-9]?[0-9]?\/(tcp|udp).*/gm);
-            const objArr = arr.map((e) => {
-                const splitArr = e.split(/[ ]{1,}/);
-                const myObj = {
-                    port: splitArr[0],
-                    status: splitArr[1],
-                    service: splitArr[2],
-                };
-                return myObj;
-            });
-            setApiResult(objArr);
-            setConsoleText(data);
-            console.log(data);
+            const request = await fetch(`http://localhost:6969/${host}/${scanType}`);
+            data = await request.json();
+            setApiData(data);
+            try{
+                setCardData(data.nmaprun.host.ports.port);
+            }
+            catch{
+                console.log('error occured line 22');
+                console.log(data);
+            }
         } catch (error) {
             console.log(error);
             setError(true);
@@ -49,7 +44,7 @@ const Form = ({ spinner, setSpinner, setError, setErrorMessage, setApiResult, se
         const urlPattern = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
         const ipAddrPattern = /\b(?:(?:2(?:[0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9])\.){3}(?:(?:2([0-4][0-9]|5[0-5])|[0-1]?[0-9]?[0-9]))\b/ig;
 
-        if (urlPattern.test(inputText) | ipAddrPattern.test(inputText)) {
+        if (urlPattern.test(inputText) | ipAddrPattern.test(inputText) | inputText === 'localhost') {
             setHost(inputText);
             setDisabled(false);
         }
