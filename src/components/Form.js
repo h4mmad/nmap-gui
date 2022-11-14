@@ -1,8 +1,6 @@
 import { useState } from "react";
 
-const Form = ({ spinner, setSpinner, setError, setErrorMessage, setCardData }) => {
-
-    const [apiData, setApiData] = useState({});
+const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCardData, setConsoleText }) => {
     const [disabled, setDisabled] = useState(true);
     const [host, setHost] = useState('');
     const [scanType, setScanType] = useState('-Pn');
@@ -16,19 +14,15 @@ const Form = ({ spinner, setSpinner, setError, setErrorMessage, setCardData }) =
             setError(false);
             const request = await fetch(`http://localhost:6969/${host}/${scanType}`);
             data = await request.json();
-            setApiData(data);
-            try{
-                setCardData(data.nmaprun.host.ports.port);
-            }
-            catch{
-                console.log('error occured line 22');
-                console.log(data);
-            }
+            console.log(data);
+            setCardData(data.nmaprun.host.ports.port);
+            setConsoleText(data._comment);
+            setIpAddr(data.nmaprun.host.address._attributes.addr);
         } catch (error) {
             console.log(error);
             setError(true);
             setSpinner(false);
-            setErrorMessage(data);
+            setErrorMessage(data.error);
             console.log(data);
         } finally {
             setSpinner(false);
@@ -61,8 +55,9 @@ const Form = ({ spinner, setSpinner, setError, setErrorMessage, setCardData }) =
     }
 
     const dropDownHandler = e => {
+        e.preventDefault();
         setScanType(e.target.getAttribute("value"));
-        setScanText(e.target.text);
+        setScanText(e.target.textContent);
     }
 
     return (
@@ -79,10 +74,9 @@ const Form = ({ spinner, setSpinner, setError, setErrorMessage, setCardData }) =
 
 
                     <ul className="dropdown-menu">
-                        <li onClick={dropDownHandler}><a className="dropdown-item" value="-sO" >IP protocol scan</a></li>
-                        <li onClick={dropDownHandler}><a className="dropdown-item" value="-sU">UDP Scan</a></li>
-                        <li onClick={dropDownHandler}><a className="dropdown-item" value="-sn" >Ping Scan - disable port scan</a></li>
-                        <li onClick={dropDownHandler}><a className="dropdown-item" value="-Pn">Treat all hosts as online -- skip host discovery</a></li>
+                        <li onClick={dropDownHandler}><button className="dropdown-item" value="-sO" >IP protocol scan</button></li>
+                        <li onClick={dropDownHandler}><button className="dropdown-item" value="-sU">UDP Scan</button></li>
+                        <li onClick={dropDownHandler}><button className="dropdown-item" value="-Pn">Treat all hosts as online -- skip host discovery</button></li>
                     </ul>
                 </div>
 

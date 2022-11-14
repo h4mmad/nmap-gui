@@ -12,12 +12,12 @@ app.get('/:host/:scanType', function (req, res) {
     exec(`nmap -oX scan.xml ${req.params.scanType} ${req.params.host}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
-            res.send(error);
+            res.send({error: error});
             return;
         }
         if (stderr) {
             console.log(`stderr: ${stderr}`);
-            res.send(stderr);
+            res.send({error: stderr});
             return;
         }
 
