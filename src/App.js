@@ -11,6 +11,7 @@ import Header from "./components/Header";
 function App() {
   const [spinner, setSpinner] = useState(false);
   const [consoleText, setConsoleText] = useState("");
+  const [scanReport, setScanReport] = useState("");
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [cardData, setCardData] = useState([]);
@@ -20,13 +21,11 @@ function App() {
   return (
     <div className="container-sm">
       <Header />
-      {error ? (
+      {error &&
         <div className="alert alert-danger" role="alert">
           An error occured: {errorMessage}
-        </div>
-      ) : (
-        ""
-      )}
+        </div>}
+
 
 
       <Form
@@ -37,17 +36,18 @@ function App() {
         setConsoleText={setConsoleText}
         setCardData={setCardData}
         setIpAddr={setIpAddr}
+        setScanReport={setScanReport}
       />
 
 
 
-      {spinner ? <Spinner /> : ""}
+      {spinner && <Spinner />}
 
       {error | spinner ? (
         ""
-      ) : (
+      ) : 
         <div>
-          <h4 className="mb-3 mt-5">{ipAddr}</h4>
+          {scanReport && <h4 className="mb-3 mt-5">IP Address: {ipAddr}</h4>}
 
           <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
             {cardData.map((e) => (
@@ -55,9 +55,12 @@ function App() {
             ))}
           </div>
 
-          {consoleText === "" ? "" : <Console consoleText={consoleText} />}
+          {scanReport && <hr></hr>}
+          {scanReport && <Console consoleText={consoleText} title="Scan command" />}
+          {scanReport && <Console consoleText={scanReport} title="Scan report" />}
+
         </div>
-      )}
+      }
 
 
 

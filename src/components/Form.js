@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCardData, setConsoleText }) => {
+const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCardData, setConsoleText, setScanReport }) => {
     const [disabled, setDisabled] = useState(true);
     const [host, setHost] = useState('');
     const [scanType, setScanType] = useState('-Pn');
@@ -14,9 +14,12 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
             setError(false);
             const request = await fetch(`http://localhost:6969/${host}/${scanType}`);
             data = await request.json();
-            console.log(data);
             setCardData(data.nmaprun.host.ports.port);
+            
+            console.log(data);
+            setConsoleText(data);
             setConsoleText(data._comment);
+            setScanReport(data.stdout);
             setIpAddr(data.nmaprun.host.address._attributes.addr);
         } catch (error) {
             console.log(error);
@@ -67,6 +70,7 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
                 <input onChange={inputHandler} type="email" className="form-control" />
 
                 <div className="dropdown mt-2">
+                    {/* eslint-disable-next-line */}
                     <a className="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         Scan type: {scanType}
                     </a>
