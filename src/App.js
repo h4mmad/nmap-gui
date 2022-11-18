@@ -6,6 +6,7 @@ import Card from "./components/Card";
 import Console from "./components/Console";
 import Spinner from "./components/Spinner";
 import Header from "./components/Header";
+import DownloadScanReport from "./components/DownloadScanReport";
 
 
 function App() {
@@ -45,7 +46,7 @@ function App() {
 
       {error | spinner ? (
         ""
-      ) : 
+      ) :
         <div>
           {scanReport && <h4 className="mb-3 mt-5">IP Address: {ipAddr}</h4>}
 
@@ -58,7 +59,7 @@ function App() {
           {scanReport && <hr></hr>}
           {scanReport && <Console consoleText={consoleText} title="Scan command" />}
           {scanReport && <Console consoleText={scanReport} title="Scan report" />}
-
+          {scanReport && <DownloadScanReport scanReport={scanReport} consoleText={consoleText}/>}
         </div>
       }
 

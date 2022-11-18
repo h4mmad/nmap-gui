@@ -18,8 +18,8 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
             
             console.log(data);
             setConsoleText(data);
-            setConsoleText(data._comment);
-            setScanReport(data.stdout);
+            setConsoleText(data._comment.trim());
+            setScanReport(data.stdout.trim());
             setIpAddr(data.nmaprun.host.address._attributes.addr);
         } catch (error) {
             console.log(error);
