@@ -5,17 +5,18 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
     const [host, setHost] = useState('');
     const [scanType, setScanType] = useState('-Pn');
     const [scanText, setScanText] = useState('Treat all hosts as online -- skip host discovery');
-
+    const [scanCommandInput, setScanCommandInput] = useState(null);
 
     async function getAPIData() {
         let data = ''
         try {
             setSpinner(true);
             setError(false);
+            //change the url ip address if required, this may be causing the error
             const request = await fetch(`http://localhost:6969/${host}/${scanType}`);
             data = await request.json();
             setCardData(data.nmaprun.host.ports.port);
-            
+
             console.log(data);
             setConsoleText(data);
             setConsoleText(data._comment.trim());
@@ -35,7 +36,6 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
 
 
     const inputHandler = e => {
-
         const inputText = e.target.value;
 
         const urlPattern = /[-a-zA-Z0-9@:%_+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_+.~#?&//=]*)?/gi;
@@ -63,11 +63,16 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
         setScanText(e.target.textContent);
     }
 
+    const scanCommandHandler = e =>{
+        const command = e.target.value;
+        setScanCommandInput(command);
+    }
+
     return (
         <form>
             <div className="mb-3 mt-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Enter Host URL</label>
-                <input onChange={inputHandler} type="email" className="form-control" />
+                <input onChange={inputHandler} className="form-control" />
 
                 <div className="dropdown mt-2">
                     {/* eslint-disable-next-line */}
@@ -83,7 +88,7 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
                         <li onClick={dropDownHandler}><button className="dropdown-item" value="-Pn">Treat all hosts as online -- skip host discovery</button></li>
                     </ul>
                 </div>
-
+                
                 <button onClick={submitHandler} className={`btn  btn-primary mt-5 ${spinner | disabled ? "disabled" : ''}`}>Start scan</button>
             </div>
         </form>

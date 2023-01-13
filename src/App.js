@@ -39,6 +39,7 @@ function App() {
         setIpAddr={setIpAddr}
         setScanReport={setScanReport}
       />
+      
 
 
 
@@ -57,9 +58,9 @@ function App() {
           </div>
 
           {scanReport && <hr></hr>}
+          {scanReport && <DownloadScanReport scanReport={scanReport} consoleText={consoleText} />}
           {scanReport && <Console consoleText={consoleText} title="Scan command" />}
           {scanReport && <Console consoleText={scanReport} title="Scan report" />}
-          {scanReport && <DownloadScanReport scanReport={scanReport} consoleText={consoleText}/>}
         </div>
       }
 
