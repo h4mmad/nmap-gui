@@ -36,7 +36,7 @@ app.get('/:fullScanCommand', function (req, res) {
     console.log(req.params.fullScanCommand);
 
     console.log('Someone connected');
-    exec(`fullScanCommand -oX scan.xml`, (error, stdout, stderr) => {
+    exec(`${req.params.fullScanCommand} -oX scan.xml`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             res.send({ error: error });

@@ -5,7 +5,6 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
     const [host, setHost] = useState('');
     const [scanType, setScanType] = useState('-Pn');
     const [scanText, setScanText] = useState('Treat all hosts as online -- skip host discovery');
-    const [scanCommandInput, setScanCommandInput] = useState(null);
 
     async function getAPIData() {
         let data = ''
@@ -61,11 +60,6 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
         e.preventDefault();
         setScanType(e.target.getAttribute("value"));
         setScanText(e.target.textContent);
-    }
-
-    const scanCommandHandler = e =>{
-        const command = e.target.value;
-        setScanCommandInput(command);
     }
 
     return (

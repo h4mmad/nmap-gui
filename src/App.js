@@ -7,6 +7,7 @@ import Console from "./components/Console";
 import Spinner from "./components/Spinner";
 import Header from "./components/Header";
 import DownloadScanReport from "./components/DownloadScanReport";
+import FullCommandInput from "./components/FullCommandInput";
 
 
 function App() {
@@ -39,7 +40,18 @@ function App() {
         setIpAddr={setIpAddr}
         setScanReport={setScanReport}
       />
-      
+      <hr></hr>
+      <FullCommandInput
+        spinner={spinner}
+        setSpinner={setSpinner}
+        setError={setError}
+        setErrorMessage={setErrorMessage}
+        setConsoleText={setConsoleText}
+        setCardData={setCardData}
+        setIpAddr={setIpAddr}
+        setScanReport={setScanReport}
+      />
+
 
 
 
