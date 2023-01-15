@@ -20,7 +20,13 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
             setConsoleText(data);
             setConsoleText(data._comment.trim());
             setScanReport(data.stdout.trim());
-            setIpAddr(data.nmaprun.host.address._attributes.addr);
+
+            if (Array.isArray(data.nmaprun.host.address)) {
+                setIpAddr(data.nmaprun.host.address[0]._attributes.addr);
+            } else {
+                setIpAddr(data.nmaprun.host.address._attributes.addr);
+            }
+            
         } catch (error) {
             console.log(error);
             setError(true);
@@ -82,7 +88,7 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
                         <li onClick={dropDownHandler}><button className="dropdown-item" value="-Pn">Treat all hosts as online -- skip host discovery</button></li>
                     </ul>
                 </div>
-                
+
                 <button onClick={submitHandler} className={`btn  btn-primary mt-5 ${spinner | disabled ? "disabled" : ''}`}>Start scan</button>
             </div>
         </form>
