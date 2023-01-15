@@ -1,6 +1,6 @@
 # Steps to run the application
 
-1. git clone
+1. git clone https://github.com/h4mmad/nmap-gui/tree/JSON-Response
 2. make sure you have npm installed, if not install Node.js
 3. use 'cd' and move to the downloaded directory
 4. type ``` npm install ``` in the terminal
