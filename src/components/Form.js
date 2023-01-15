@@ -25,7 +25,7 @@ const Form = ({ setIpAddr, spinner, setSpinner, setError, setErrorMessage, setCa
             console.log(error);
             setError(true);
             setSpinner(false);
-            setErrorMessage(data.error);
+            setErrorMessage(error);
             console.log(data);
         } finally {
             setSpinner(false);
